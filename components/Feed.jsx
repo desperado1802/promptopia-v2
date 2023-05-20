@@ -6,7 +6,13 @@ const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [posts, setPosts] = useState([]);
 
-  const handleSearchChange = (e) => {};
+  const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const handleTagClick = (tag) => {
+    setSearchText(tag);
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -31,17 +37,26 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList data={posts} handleRagClick={() => {}} />
+      <PromptCardList
+        data={posts}
+        searchText={searchText}
+        setSearchText={setSearchText}
+        handleTagClick={handleTagClick}
+      />
     </section>
   );
 };
 
 export default Feed;
 
-const PromptCardList = ({ data, handleTagClick }) => {
+const PromptCardList = ({ data, handleTagClick, searchText }) => {
+  const filteredPosts = data.filter((post) => {
+    return post.prompt.includes(searchText) || post.tag.includes(searchText);
+  });
+
   return (
     <div className="mt-16 prompt_layout">
-      {data.map((post) => (
+      {filteredPosts.map((post) => (
         <PromptCard key={post.id} post={post} handleTagClick={handleTagClick} />
       ))}
     </div>
