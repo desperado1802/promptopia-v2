@@ -50,8 +50,9 @@ const Feed = () => {
 export default Feed;
 
 const PromptCardList = ({ data, handleTagClick, searchText }) => {
+  const regexCase = new RegExp(searchText, "i");
   const filteredPosts = data.filter((post) => {
-    return post.prompt.includes(searchText) || post.tag.includes(searchText);
+    return regexCase.test(post.prompt) || regexCase.test(post.tag);
   });
 
   return (
