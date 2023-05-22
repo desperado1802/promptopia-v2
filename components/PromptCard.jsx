@@ -26,7 +26,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
             href={
               session?.user?.id === post.creator._id
                 ? "/profile"
-                : `/profile?id=${post.creator._id}`
+                : `/profile/${post.creator._id}?name=${post.creator.username}`
             }
           >
             <Image
