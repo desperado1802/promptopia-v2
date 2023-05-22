@@ -1,18 +1,16 @@
 "use client";
-import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Profile from "@components/Profile";
 
 const MyProfile = () => {
-  const { data: session } = useSession();
-
   const [posts, setPosts] = useState([]);
 
   const router = useRouter();
 
   const searchParams = useSearchParams();
   const userId = searchParams.get("id");
+  console.log(userId);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -21,8 +19,8 @@ const MyProfile = () => {
       setPosts(data);
     };
 
-    if (session?.user.id) fetchPosts();
-  }, []);
+    if (userId) fetchPosts();
+  }, [userId]);
 
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`);
