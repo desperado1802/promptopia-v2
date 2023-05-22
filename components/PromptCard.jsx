@@ -24,7 +24,9 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
         <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
           <Link
             href={
-              session?.user?.id === post.creator._id ? "/profile" : "/profiles"
+              session?.user?.id === post.creator._id
+                ? "/profile"
+                : `/profile?id=${post.creator._id}`
             }
           >
             <Image
