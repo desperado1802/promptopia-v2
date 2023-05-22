@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Profile from "@components/Profile";
 
-const MyProfile = () => {
+const UserProfile = () => {
   const [posts, setPosts] = useState([]);
 
   const router = useRouter();
@@ -54,4 +54,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
+export default UserProfile;
