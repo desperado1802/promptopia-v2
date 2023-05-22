@@ -1,5 +1,5 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Profile from "@components/Profile";
 
@@ -8,19 +8,17 @@ const MyProfile = () => {
 
   const router = useRouter();
 
-  const searchParams = useSearchParams();
-  const userId = searchParams.get("id");
-  console.log(userId);
+  const { id } = router.query;
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch(`/api/users/${userId}/posts`);
+      const response = await fetch(`/api/users/${id}/posts`);
       const data = await response.json();
       setPosts(data);
     };
 
-    if (userId) fetchPosts();
-  }, [userId]);
+    if (id) fetchPosts();
+  }, [id]);
 
   const handleEdit = (post) => {
     router.push(`/update-prompt?id=${post._id}`);
