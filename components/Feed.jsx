@@ -50,10 +50,25 @@ const Feed = () => {
 export default Feed;
 
 const PromptCardList = ({ data, handleTagClick, searchText }) => {
-  const regexCase = new RegExp(searchText, "i");
-  const filteredPosts = data.filter((post) => {
-    return regexCase.test(post.prompt) || regexCase.test(post.tag);
-  });
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [timeoutId, setTimeoutId] = useState(null);
+
+  useEffect(() => {
+    clearTimeout(timeoutId);
+
+    const newTimeoutId = setTimeout(() => {
+      const regexCase = new RegExp(searchText, "i");
+
+      const filteredPostsFetch = data.filter((post) => {
+        return regexCase.test(post.prompt) || regexCase.test(post.tag);
+      });
+      setFilteredPosts(filteredPostsFetch);
+    }, 500);
+
+    setTimeoutId(newTimeoutId);
+
+    return () => clearTimeout(newTimeoutId);
+  }, [data, searchText]);
 
   return (
     <div className="mt-16 prompt_layout">
